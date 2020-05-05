@@ -6,6 +6,7 @@ import hashlib
 import tempfile
 import flask
 import arrow
+from PIL import Image
 from insta485 import mail
 from flask import Flask, render_template, url_for, flash, redirect
 from flask_wtf import FlaskForm
@@ -777,6 +778,7 @@ def user(username):
             return flask.abort(403)
         # create the post
         connection = insta485.model.get_db()
+        print(flask.request.files['file'])
         hash_filename = create_file_hash(flask.request.files['file'])
         connection.execute(
             "INSERT INTO posts(filename, owner) VALUES('%s','%s')"
@@ -1032,11 +1034,12 @@ def create_file_hash(filename):
     """Generate a hash filename."""
     dummy, temp_filename = tempfile.mkstemp()
     file = filename
+    file.thumbnail(output_size)
     file.save(temp_filename)
 
     # Compute filename
     hash_txt = sha256sum(temp_filename)
-    dummy, suffix = os.path.splitext(file.filename)
+    dummy, suffix = os.path.splitext(i.filename)
     hash_filename_basename = hash_txt + suffix
     hash_filename = os.path.join(
         insta485.app.config["UPLOAD_FOLDER"],

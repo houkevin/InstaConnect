@@ -61,7 +61,7 @@ class Post extends React.Component {
                 <img src={ownerImgUrl} alt = ""
                 width="40" height="40"/>
             </a>
-            <a class="a-link" href={ownerShowUrl}>
+            <a class="a-link-prof" href={ownerShowUrl}>
               {owner}
             </a>
           </div>
