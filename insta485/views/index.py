@@ -505,7 +505,10 @@ def create_account():
         hash_obj.update(password_salted.encode('utf-8'))
         password_hash = hash_obj.hexdigest()
         password_db_string = "$".join([algorithm, salt, password_hash])
-        hash_filename = create_file_hash(picture)
+        if not picture:
+            hash_filename = ""
+        else:
+            hash_filename = create_file_hash(picture)
 
         connection.execute(
             (

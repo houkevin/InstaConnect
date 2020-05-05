@@ -12,9 +12,6 @@ set -x
 
 #run insta485db create
 #check if database file exists 
-if [ ! -f /var/insta485.sqlite3 ]; then
-./bin/insta485db create
-fi
 
 #Set FLASK_DEBUG, FLASK_APP and INSTA485_SETTINGS environment variables
 export FLASK_DEBUG=True
