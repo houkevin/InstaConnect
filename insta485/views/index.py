@@ -43,10 +43,9 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class UpdateAccountForm(FlaskForm):
-    fullname = StringField('Name',
-                           validators=[DataRequired()])
-    email = StringField('Email',
-                        validators=[DataRequired(), Email()])
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    fullname = StringField('Name')
+    email = StringField('Email')
     submit = SubmitField('Update')
 
 class UpdatePassword(FlaskForm):
@@ -543,11 +542,12 @@ def edit_account():
     if flask.request.method == "POST" and form.validate_on_submit():
         fullname = form.fullname.data
         email = form.email.data
+        picture = form.picture.data
         # update all of the fields if a new image is given
         # otherwise just update the name and email
-        if flask.request.files.get('file'):
+        if picture:
             # The user uploaded a new profile pic
-            hash_filename = create_file_hash(flask.request.files['file'])
+            hash_filename = create_file_hash(picture)
             # Delete the old photo from /var/uploads/ before replacing it
             cur = connection.execute(
                 (
@@ -562,7 +562,8 @@ def edit_account():
                 insta485.app.config["UPLOAD_FOLDER"],
                 filename[0]['filename']
                 )
-            os.remove(filepath)
+            if not os.path.isdir(filepath):
+                os.remove(filepath)
 
             connection.execute(
                 (
@@ -648,7 +649,8 @@ def delete_account():
             profile_pic[0]['filename']
             )
         # delete the users profile picture
-        os.remove(filepath)
+        if not os.path.isdir(filepath):
+            os.remove(filepath)
 
         # Delete the user from the database
         # delete on cascade clean up all of the other tables
