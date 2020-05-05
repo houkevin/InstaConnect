@@ -1,0 +1,26 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying 52.15.236.222...
+* TCP_NODELAY set
+* Connected to ec2-52-15-236-222.us-east-2.compute.amazonaws.com (52.15.236.222) port 80 (#0)
+> GET /static/js/bundle.js HTTP/1.1
+> Host: ec2-52-15-236-222.us-east-2.compute.amazonaws.com
+> User-Agent: curl/7.64.1
+> Accept: */*
+> Cookie: login=eyJ1c2VybmFtZSI6ImF3ZGVvcmlvIn0.XkswTg.T17aAUs8zweLvRBGudpb784A5f8
+> 
+< HTTP/1.1 200 OK
+< Server: nginx/1.10.3 (Ubuntu)
+< Date: Tue, 18 Feb 2020 00:32:20 GMT
+< Content-Type: application/javascript; charset=utf-8
+< Content-Length: 1772885
+< Connection: keep-alive
+< Last-Modified: Tue, 18 Feb 2020 00:29:30 GMT
+< Cache-Control: public, max-age=43200
+< Expires: Tue, 18 Feb 2020 12:32:20 GMT
+< ETag: "1581985770.287018-1772885-2445742257"
+< 
+{ [5433 bytes data]
+ 25 1731k   25  449k    0     0  3566k      0 --:--:-- --:--:-- --:--:-- 3537k100 1731k  100 1731k    0     0  8445k      0 --:--:-- --:--:-- --:--:-- 8404k
+* Connection #0 to host ec2-52-15-236-222.us-east-2.compute.amazonaws.com left intact
+* Closing connection 0

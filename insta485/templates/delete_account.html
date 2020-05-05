@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container my-container2">
+    <p>
+        <a href="/u/{{cur_user}}/"
+            style ="text-decoration:none">
+            {{cur_user}}
+        </a>
+    </p>
+    <form action="/accounts/delete/" method="post" enctype="multipart/form-data">
+        <input type="submit" name="delete" value="confirm delete account"/>
+    </form>
+</div>
+{% endblock content %}

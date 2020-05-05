@@ -1,0 +1,27 @@
+#!/bin/bash
+# This isn't required in the spec, just thought it'd make it'd be
+# easier to keep track of commands to send endpoints to test them
+
+# We'll need to modify the data for each request so that it makes sense.
+
+# Login before using any of the below commands:
+http --session=./session.json --form POST "http://localhost:8000/accounts/login/" username=awdeorio password=password submit=login
+
+# Api tests
+http --session=./session.json --form GET http://localhost:8000/api/v1/
+
+# Post tests
+http --session=./session.json --form GET http://localhost:8000/api/v1/p/
+http --session=./session.json --form GET http://localhost:8000/api/v1/p/1/
+
+# Comment tests
+http --session=./session.json --form GET http://localhost:8000/api/v1/p/1/comments/
+http --session=./session.json --form POST http://localhost:8000/api/v1/p/1/comments/ data="hello world"
+
+# Like tests
+http --session=./session.json --form GET http://localhost:8000/api/v1/p/1/likes/
+http --session=./session.json --form POST http://localhost:8000/api/v1/p/1/likes/ data="hello world"
+http --session=./session.json --form DELETE http://localhost:8000/api/v1/p/1/likes/ data="hello world"
+
+
+

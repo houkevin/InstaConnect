@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container my-container2">
+	<h2>Followers</h2>
+	{% for person in overlap_img_user %}
+	<div class="row my-row-explore">
+		<div class="col my-col-prof">
+			<img src="/uploads/{{person['filename']}}"  alt = ""
+			width="25" height="25">
+			<a class="a-link" href="/u/{{person['username1']}}/"
+			style ="text-decoration:none">
+			{{person['username1']}}
+			</a>
+			{% if person['username1'] != cur_user %}
+			following
+		</div>
+		<div class="col my-col-prof text-right">
+			<form action="/u/{{username}}/followers/" method="post" enctype="multipart/form-data">
+				<input type="submit" name="unfollow" value="unfollow"/>
+				<input type="hidden" name="username" value="{{person['username1']}}"/>
+			</form>
+		</div>
+	</div>	
+	{% endif %}
+	{% endfor %}
+	{% for person in non_overlap_img_user %}
+	<div class="row my-row-explore">
+		<div class="col my-col-prof">
+			<img src="/uploads/{{person['filename']}}"  alt = ""
+			width="25" height="25">
+			
+			<a class="a-link" href="/u/{{person['username1']}}/"
+			style ="text-decoration:none">
+			{{person['username1']}}
+			</a>
+			{% if person['username1'] != cur_user %}
+			not following 
+		</div>
+		<div class="col my-col-prof text-right">
+			<form action="/u/{{username}}/followers/" method="post" enctype="multipart/form-data">
+				<input type="submit" name="follow" value="follow"/>
+				<input type="hidden" name="username" value="{{person['username1']}}"/>
+			</form>
+		</div>
+	</div>
+	{% endif %}
+	{% endfor %}
+</div>
+{% endblock content %}

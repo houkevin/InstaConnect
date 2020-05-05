@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+  <h1>Users</h1>
+  {% for user in users %}
+  <p>{{user.username}} {{user.fullname}} {{user.email}}
+	<img src="/uploads/{{user.filename}}"  alt = ""
+	width="25" height="25">
+  {{user.password}} {{user.created}}</p>
+  {% endfor %}
+</body>
+</html>

@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for post in posts %}
+<div class="container my-container">
+	<div class="row my-row">
+		<div class="col my-col-prof">
+			<a href="/u/{{post['owner']}}/">
+				<img src="/uploads/{{user_info[0]['filename']}}"  alt = ""
+				width="40" height="40">
+			</a>
+			<a class="a-link" href="/u/{{post['owner']}}/">
+				{{post['owner']}}
+			</a>
+		</div>
+		<div class="col my-col-prof text-right">
+			<a class="a-link" href="/p/{{post['postid']}}/"
+			style ="text-decoration:none">
+				{{post['created']}}
+			</a> 
+		</div>
+	</div>
+	<div class="row my-row-pic">
+		<img src="/uploads/{{post['filename']}}" alt = ""
+		width=98% height=30%>
+	</div>
+	<div class="row my-row">
+		{% set count = namespace(value=0) %}
+		{% for like in likes %}
+			{% if like['postid'] == post['postid']%}
+				{% set count.value = count.value + 1 %}
+			{% endif %}
+		{% endfor %}
+		{{ count.value }}			
+		{% if count.value > 1 or count.value == 0%}
+				likes
+		{% else %}
+				like
+		{% endif %}
+	</div>
+		{% for comment in comments %}
+			{% if comment['postid'] == post['postid'] %}
+			<div class="row my-row">
+				<p>
+				<a class="a-link" href="/u/{{comment['owner']}}/">
+				{{comment['owner']}}
+				</a>
+				 {{comment['text']}}</p>
+				 {% endif %}
+				 {% if comment['owner'] == cur_user %}
+				 <form action="/p/{{post['postid']}}/" method="post" enctype="multipart/form-data">
+					 <input type="hidden" name="commentid" value="{{comment['commentid']}}"/>
+					 <input type="submit" name="uncomment" value="delete"/>
+				   </form>
+				 {% endif %}
+			</div>
+		{% endfor %}
+<div class="row my-row">
+	{% if post['postid'] in hasLiked|map(attribute="postid") %}
+		<form action="/p/{{post['postid']}}/" method="post" enctype="multipart/form-data">
+		  <input type="hidden" name="postid" value="{{post['postid']}}"/>
+		  <input type="submit" name="unlike" value="unlike"/>
+		</form>
+	{% else %}
+	<form action="/p/{{post['postid']}}/" method="post" enctype="multipart/form-data">
+	  <input type="hidden" name="postid" value="{{post['postid']}}"/>
+	  <input type="submit" name="like" value="like"/>
+	</form>
+	{% endif %}
+</div>
+<div class="row my-row">
+	<form action="/p/{{post['postid']}}/" method="post" enctype="multipart/form-data">
+	  <input type="hidden" name="postid" value="{{post['postid']}}"/>
+	  <input type="text" name="text"/>
+	  <input type="submit" name="comment" value="comment"/>
+	</form>
+</div>
+<div class="row my-row">
+	{% if post['owner'] == cur_user %}
+	  <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">
+		  Delete This Post
+	  </button>
+	
+	  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  <form action="/p/{{post['postid']}}/" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="postid" value="{{post['postid']}}"/>
+				<input class="btn btn-danger" type="submit" name="delete" value="Delete"/>
+			  </form>
+			</div>
+		  </div>
+		</div>
+	  </div>
+</div>
+{% endif %}
+</div>
+{% endfor %}
+{% endblock content %}

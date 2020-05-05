@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container my-container2">
+<h2>Discover People</h2>
+
+{% for person in not_following %}
+{% if person['username'] != cur_user %}
+<div class="row my-row-explore">
+	<div class="col my-col-prof">
+		<img src="/uploads/{{person['filename']}}"  alt = ""
+		width="25" height="25">
+		<a class="a-link" href="/u/{{person['username']}}/" style ="text-decoration:none">
+			{{person['username']}}
+		</a>
+	</div>
+	<div class="col my-col-prof text-right">
+	<form action="/explore/" method="post" enctype="multipart/form-data">
+		<input type="submit" name="follow" value="follow"/>
+		<input type="hidden" name="username" value="{{person['username']}}"/>
+	  </form>
+	</div>
+</div>
+
+{% endif %}
+{% endfor %}
+</div>
+{% endblock content %}
