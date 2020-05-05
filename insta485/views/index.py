@@ -636,7 +636,8 @@ def delete_account():
                 insta485.app.config["UPLOAD_FOLDER"],
                 file['filename']
                 )
-            os.remove(filepath)
+            if os.path.isfile(filepath):
+                os.remove(filepath)
         cur = connection.execute(
             "SELECT filename FROM users WHERE username = '%s'"
             % (flask.session['username'])
