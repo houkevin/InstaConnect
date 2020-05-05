@@ -1034,7 +1034,6 @@ def create_file_hash(filename):
     """Generate a hash filename."""
     dummy, temp_filename = tempfile.mkstemp()
     file = filename
-    file.thumbnail(output_size)
     file.save(temp_filename)
 
     # Compute filename
