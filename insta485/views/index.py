@@ -1038,7 +1038,7 @@ def create_file_hash(filename):
 
     # Compute filename
     hash_txt = sha256sum(temp_filename)
-    dummy, suffix = os.path.splitext(i.filename)
+    dummy, suffix = os.path.splitext(file.filename)
     hash_filename_basename = hash_txt + suffix
     hash_filename = os.path.join(
         insta485.app.config["UPLOAD_FOLDER"],
